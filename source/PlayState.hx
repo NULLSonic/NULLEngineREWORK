@@ -472,50 +472,6 @@ class PlayState extends MusicBeatState
 				bg.scale.set(6, 6);
 				add(bg);
 
-			/* 
-				var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic(Paths.image('weeb/evilSchoolBG'));
-				bg.scale.set(6, 6);
-				// bg.setGraphicSize(Std.int(bg.width * 6));
-				// bg.updateHitbox();
-				add(bg);
-
-				var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic(Paths.image('weeb/evilSchoolFG'));
-				fg.scale.set(6, 6);
-				// fg.setGraphicSize(Std.int(fg.width * 6));
-				// fg.updateHitbox();
-				add(fg);
-
-				wiggleShit.effectType = WiggleEffectType.DREAMY;
-				wiggleShit.waveAmplitude = 0.01;
-				wiggleShit.waveFrequency = 60;
-				wiggleShit.waveSpeed = 0.8;
-			 */
-
-			// bg.shader = wiggleShit.shader;
-			// fg.shader = wiggleShit.shader;
-
-			/* 
-				var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
-				var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
-
-				// Using scale since setGraphicSize() doesnt work???
-				waveSprite.scale.set(6, 6);
-				waveSpriteFG.scale.set(6, 6);
-				waveSprite.setPosition(posX, posY);
-				waveSpriteFG.setPosition(posX, posY);
-
-				waveSprite.scrollFactor.set(0.7, 0.8);
-				waveSpriteFG.scrollFactor.set(0.9, 0.8);
-
-				// waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
-				// waveSprite.updateHitbox();
-				// waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
-				// waveSpriteFG.updateHitbox();
-
-				add(waveSprite);
-				add(waveSpriteFG);
-			 */
-
 			case 'guns' | 'stress' | 'ugh':
 				defaultCamZoom = 0.90;
 				curStage = 'tank';
@@ -899,12 +855,14 @@ class PlayState extends MusicBeatState
 					});
 				case 'senpai' | 'roses' | 'thorns':
 					schoolIntro(doof);
+				#if web
 				case 'ugh':
 					ughIntro();
 				case 'stress':
 					stressIntro();
 				case 'guns':
 					gunsIntro();
+				#end
 
 				default:
 					startCountdown();
@@ -914,14 +872,6 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				// REMOVE THIS LATER
-				// case 'ugh':
-				// 	ughIntro();
-				// case 'stress':
-				// 	stressIntro();
-				// case 'guns':
-				// 	gunsIntro();
-
 				default:
 					startCountdown();
 			}
@@ -2322,7 +2272,6 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
-					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
 
@@ -2742,9 +2691,12 @@ class PlayState extends MusicBeatState
 		});
 	}
 
+	var tween = FlxTween;
+
 	function noteMiss(direction:Int = 1):Void
 	{
 		// whole function used to be encased in if (!boyfriend.stunned)
+
 		health -= 0.04;
 		killCombo();
 
@@ -2774,27 +2726,6 @@ class PlayState extends MusicBeatState
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
 	}
-
-	/* not used anymore lol
-
-	function badNoteHit()
-	{
-		// just double pasting this shit cuz fuk u
-		// REDO THIS SYSTEM!
-		var leftP = controls.NOTE_LEFT_P;
-		var downP = controls.NOTE_DOWN_P;
-		var upP = controls.NOTE_UP_P;
-		var rightP = controls.NOTE_RIGHT_P;
-
-		if (leftP)
-			noteMiss(0);
-		if (downP)
-			noteMiss(1);
-		if (upP)
-			noteMiss(2);
-		if (rightP)
-			noteMiss(3);
-	} */
 
 	function goodNoteHit(note:Note):Void
 	{

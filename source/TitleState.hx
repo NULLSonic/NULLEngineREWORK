@@ -89,14 +89,9 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
 		PreferencesMenu.initPrefs();
 		PlayerSettings.init();
 		Highscore.load();
-
-		#if newgrounds
-		NGio.init();
-		#end
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{
@@ -398,12 +393,6 @@ class TitleState extends MusicBeatState
 		{
 			if (FlxG.sound.music != null)
 				FlxG.sound.music.onComplete = null;
-			// netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
-			NGio.unlockMedal(60960);
-
-			// If it's Friday according to da clock
-			if (Date.now().getDay() == 5)
-				NGio.unlockMedal(61034);
 
 			titleText.animation.play('press');
 
@@ -411,55 +400,13 @@ class TitleState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
-			// FlxG.sound.music.stop();
+			
+			var Timer:FlxTimer = new FlxTimer().start(2.3, changeState);
 
-			#if newgrounds
-			if (!OutdatedSubState.leftState)
-			{
-				NGio.checkVersion(function(version)
-				{
-					// Check if version is outdated
-
-					var localVersion:String = "v" + Application.current.meta.get('version');
-					var onlineVersion = version.split(" ")[0].trim();
-
-					if (version.trim() != onlineVersion)
-					{
-						trace('OLD VERSION!');
-						// FlxG.switchState(new OutdatedSubState());
-					}
-					else
-					{
-						// FlxG.switchState(new MainMenuState());
-					}
-
-					// REDO FOR ITCH/FINAL SHIT
-					FlxG.switchState(new MainMenuState());
-				});
-			}
-			#else
-			FlxG.switchState(new MainMenuState());
-			#end
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
 		if (pressedEnter && !skippedIntro && initialized)
 			skipIntro();
-		/* 
-			#if web
-			if (!initialized && controls.ACCEPT)
-			{
-				// netStream.dispose();
-				// FlxG.stage.removeChild(video);
-
-				startIntro();
-				skipIntro();
-			}
-			#end
-		 */
-
-		// if (FlxG.keys.justPressed.SPACE)
-		// swagShader.hasOutline = !swagShader.hasOutline;
 
 		if (controls.UI_LEFT)
 			swagShader.update(-elapsed * 0.1);
@@ -468,6 +415,11 @@ class TitleState extends MusicBeatState
 			swagShader.update(elapsed * 0.1);
 
 		super.update(elapsed);
+	}
+
+	function changeState(timer:FlxTimer):Void
+	{
+		LoadingState.loadAndSwitchState(new MainMenuState());
 	}
 
 	function createCoolText(textArray:Array<String>)
