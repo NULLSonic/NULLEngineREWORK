@@ -85,8 +85,6 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
-		// DEBUG BULLSHIT
-
 		super.create();
 
 		PreferencesMenu.initPrefs();
@@ -95,14 +93,9 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{
-			// FIX LATER!!!
-			// WEEK UNLOCK PROGRESSION!!
-			// StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
-
 			if (StoryMenuState.weekUnlocked.length < 4)
 				StoryMenuState.weekUnlocked.insert(0, true);
 
-			// QUICK PATCH OOPS!
 			if (!StoryMenuState.weekUnlocked[0])
 				StoryMenuState.weekUnlocked[0] = true;
 		}
@@ -118,39 +111,8 @@ class TitleState extends MusicBeatState
 		FlxG.switchState(new CutsceneAnimTestState());
 		#elseif CHARTING
 		FlxG.switchState(new ChartingState());
-		/* 
-			#elseif web
-
-
-			if (!initialized)
-			{
-
-				video = new Video();
-				FlxG.stage.addChild(video);
-
-				var netConnection = new NetConnection();
-				netConnection.connect(null);
-
-				netStream = new NetStream(netConnection);
-				netStream.client = {onMetaData: client_onMetaData};
-				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, netStream_onAsyncError);
-				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnection_onNetStatus);
-				// netStream.addEventListener(NetStatusEvent.NET_STATUS) // netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
-
-				overlay = new Sprite();
-				overlay.graphics.beginFill(0, 0.5);
-				overlay.graphics.drawRect(0, 0, 1280, 720);
-				overlay.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
-
-				overlay.buttonMode = true;
-				// FlxG.stage.addChild(overlay);
-
-			}
-		 */
-
-		// netConnection.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
 		#else
-		new FlxTimer().start(1, function(tmr:FlxTimer)
+		new FlxTimer().start(0, function(tmr:FlxTimer)
 		{
 			startIntro();
 		});
@@ -303,25 +265,8 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		#if debug
-		if (FlxG.keys.justPressed.EIGHT)
-			FlxG.switchState(new CutsceneAnimTestState());
-		#end
-
-		/* 
-			if (FlxG.keys.justPressed.R)
-			{
-				#if polymod
-				polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-				trace('reinitialized');
-				#end
-			}
-
-		 */
-
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		if (FlxG.keys.justPressed.F)
 			FlxG.fullscreen = !FlxG.fullscreen;
@@ -361,7 +306,7 @@ class TitleState extends MusicBeatState
 
 			transitioning = true;
 			
-			var Timer:FlxTimer = new FlxTimer().start(2.3, changeState);
+			var Timer:FlxTimer = new FlxTimer().start(1.3, changeState);
 
 		}
 
@@ -379,7 +324,11 @@ class TitleState extends MusicBeatState
 
 	function changeState(timer:FlxTimer):Void
 	{
-		LoadingState.loadAndSwitchState(new MainMenuState());
+		if (FlxG.save.data.firstLaunch = null) {
+			LoadingState.loadAndSwitchState(new MainMenuState());
+		} else {
+			LoadingState.loadAndSwitchState(new nullEngine.menus.FirstLaunchState());
+		}
 	}
 
 	function createCoolText(textArray:Array<String>)
@@ -441,48 +390,30 @@ class TitleState extends MusicBeatState
 					{
 						case 1:
 							createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-						// credTextShit.visible = true;
 						case 3:
 							addMoreText('present');
-						// credTextShit.text += '\npresent...';
-						// credTextShit.addText();
 						case 4:
 							deleteCoolText();
-						// credTextShit.visible = false;
-						// credTextShit.text = 'In association \nwith';
-						// credTextShit.screenCenter();
 						case 5:
 							createCoolText(['In association', 'with']);
 						case 7:
 							addMoreText('newgrounds');
 							ngSpr.visible = true;
-						// credTextShit.text += '\nNewgrounds';
 						case 8:
 							deleteCoolText();
 							ngSpr.visible = false;
-						// credTextShit.visible = false;
-
-						// credTextShit.text = 'Shoutouts Tom Fulp';
-						// credTextShit.screenCenter();
 						case 9:
 							createCoolText([curWacky[0]]);
-						// credTextShit.visible = true;
 						case 11:
 							addMoreText(curWacky[1]);
-						// credTextShit.text += '\nlmao';
 						case 12:
 							deleteCoolText();
-						// credTextShit.visible = false;
-						// credTextShit.text = "Friday";
-						// credTextShit.screenCenter();
 						case 13:
 							addMoreText('Friday');
-						// credTextShit.visible = true;
 						case 14:
 							addMoreText('Night');
-						// credTextShit.text += '\nNight';
 						case 15:
-							addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+							addMoreText('Funkin');
 
 						case 16:
 							skipIntro();
