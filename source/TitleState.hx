@@ -190,18 +190,17 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
-		logo = new FlxSprite(-150, -100).loadGraphic(Paths.image("menus/nengine"));
+		logo = new FlxSprite(-1500, -100).loadGraphic(Paths.image("menus/nengine"));
 		logo.shader = swagShader.shader;
 		logo.antialiasing = true;
 		logo.scale.x = 1.5;
 		logo.scale.y = 1.5;
 		logo.updateHitbox();
-		logo.screenCenter();
 		logo.y -= 50;
 
 		add(logo);
 
-		titleText = new FlxSprite(100, FlxG.height * 0.8);
+		titleText = new FlxSprite(100, FlxG.height);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
@@ -376,6 +375,21 @@ class TitleState extends MusicBeatState
 			logo.scale.y = 1.6;
 
 			FlxTween.tween(logo.scale, { x: 1.5, y: 1.5 }, 0.25);
+
+			if (doBopTween)
+			{	
+				if (curBeat % 1 == 0)
+					titleText.y = FlxG.height * 0.825;
+
+				if (curBeat % 2 == 0)
+					titleText.y = FlxG.height * 0.775;
+
+									
+				FlxTween.tween(titleText, { y: FlxG.height * 0.8}, 0.25, {
+					ease: FlxEase.elasticInOut,
+					type: ONESHOT
+				});
+			}
 		}
 		else
 		{
@@ -409,11 +423,11 @@ class TitleState extends MusicBeatState
 						case 12:
 							deleteCoolText();
 						case 13:
-							addMoreText('Friday');
+							addMoreText('FNF');
 						case 14:
-							addMoreText('Night');
+							addMoreText('NULL ENGINE');
 						case 15:
-							addMoreText('Funkin');
+							addMoreText('REWORK');
 
 						case 16:
 							skipIntro();
@@ -436,5 +450,24 @@ class TitleState extends MusicBeatState
 			remove(credGroup);
 			skippedIntro = true;
 		}
+
+		FlxTween.tween(logo, { x: 275, y: 50}, 1.5, {
+			ease: FlxEase.elasticInOut,
+			type: ONESHOT
+		});
+
+		FlxTween.tween(titleText, { y: FlxG.height * 0.8}, 1, {
+			ease: FlxEase.elasticInOut,
+			type: ONESHOT,
+			startDelay: 1,
+			onComplete: textTweenEnd
+		});
+	}
+
+	var doBopTween:Bool = false;
+
+	function textTweenEnd(tween:FlxTween):Void
+	{
+		doBopTween = true;
 	}
 }
