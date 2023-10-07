@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TextureAtlas imagePath="lime.png">
-    <!-- Written by a human being. That being NULLSonic himself. -->
-    <SubTexture name="unchecked0000" x="0" y="0" width="300" height="300"/>
-    <SubTexture name="checked0000" x="300" y="0" width="300" height="300"/>
-</TextureAtlas>

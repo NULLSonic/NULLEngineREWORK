@@ -1,7 +1,5 @@
 package nullEngine.menus;
 
-import nullEngine.backends.EngineSave;
-import nullEngine.objects.Checkmark;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -19,7 +17,6 @@ class FirstLaunchState extends MusicBeatState
 
     override function create()
     {
-        var saveFile:EngineSave = new EngineSave(true, true); //IDK How to setup stuff in a different way tbh :/ Anyway this works!
 
         bg = new FlxSprite().loadGraphic(Paths.image("menus/nullEngine/menuDesat"));
 
@@ -70,7 +67,7 @@ class FirstLaunchState extends MusicBeatState
             If not, well one way this feature is bugged or you just deleted your save file. Anyway thank you for downloading and using NULL Engine!\n
             REMEMBER! This engine isn't aiming to be a modding engine, rather it aims to be fully customizable! Wan't a miss counter but no score counter? You can do that!\n
             Again, thank you for downloading and using the engine.\n- NULLSonic\n
-            Press \"BACKSPACE\" to exit this state! Or Press \"ENTER\" to setup your engine!";
+            Press \"ENTER\" to exit this state!";
         #end
 
         add(txt);
@@ -82,14 +79,8 @@ class FirstLaunchState extends MusicBeatState
     {
         if (!pressedKey)
         {
-            if (FlxG.keys.justPressed.BACKSPACE) {
-                FlxG.sound.play(Paths.sound("cancelMenu"));
-                FlxG.save.data.firstLaunch = false;
-                nextState = "MainMenu";
-                pressedKey = true;
-                var Timer:FlxTimer = new FlxTimer().start(0.5, changeState);
-            }
             if (FlxG.keys.justPressed.ENTER) {
+                FlxG.camera.flash(FlxColor.WHITE, 1);
                 FlxG.sound.play(Paths.sound("confirmMenu"));
                 FlxG.save.data.firstLaunch = false;
                 nextState = "Setup";
@@ -103,9 +94,7 @@ class FirstLaunchState extends MusicBeatState
 
     function changeState(timer:FlxTimer):Void
         {
-            if (nextState == "MainMenu")
-                LoadingState.loadAndSwitchState(new MainMenuState());
-            if (nextState == "Setup")
-                LoadingState.loadAndSwitchState(new SetupState());
+            LoadingState.loadAndSwitchState(new TitleState());
+            //FlxG.save.data.firstLaunch = false;
         }
 }

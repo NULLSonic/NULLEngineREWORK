@@ -114,7 +114,10 @@ class TitleState extends MusicBeatState
 		#else
 		new FlxTimer().start(0, function(tmr:FlxTimer)
 		{
-			startIntro();
+			if (FlxG.save.data.firstLaunch != null)
+				startIntro();
+			else
+				LoadingState.loadAndSwitchState(new nullEngine.menus.FirstLaunchState());
 		});
 		#end
 
@@ -304,7 +307,7 @@ class TitleState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
-			
+
 			var Timer:FlxTimer = new FlxTimer().start(1.3, changeState);
 
 		}
@@ -320,14 +323,8 @@ class TitleState extends MusicBeatState
 
 		super.update(elapsed);
 	}
-
-	function changeState(timer:FlxTimer):Void
-	{
-		if (FlxG.save.data.firstLaunch = null) {
-			LoadingState.loadAndSwitchState(new MainMenuState());
-		} else {
-			LoadingState.loadAndSwitchState(new nullEngine.menus.FirstLaunchState());
-		}
+	function changeState(timer:FlxTimer):Void {
+		LoadingState.loadAndSwitchState(new MainMenuState());
 	}
 
 	function createCoolText(textArray:Array<String>)
@@ -374,7 +371,9 @@ class TitleState extends MusicBeatState
 			logo.scale.x = 1.6;
 			logo.scale.y = 1.6;
 
-			FlxTween.tween(logo.scale, { x: 1.5, y: 1.5 }, 0.25);
+			FlxTween.tween(logo.scale, { x: 1.5, y: 1.5 }, 0.25, {
+				ease: FlxEase.backInOut
+			});
 
 			if (doBopTween)
 			{	
@@ -386,7 +385,7 @@ class TitleState extends MusicBeatState
 
 									
 				FlxTween.tween(titleText, { y: FlxG.height * 0.8}, 0.25, {
-					ease: FlxEase.elasticInOut,
+					ease: FlxEase.bounceInOut,
 					type: ONESHOT
 				});
 			}

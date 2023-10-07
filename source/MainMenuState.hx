@@ -89,19 +89,10 @@ class MainMenuState extends MusicBeatState
 			FlxFlicker.flicker(magenta, 1.1, 0.15, false, true);
 		});
 
-		menuItems.enabled = false; // disable for intro
+		menuItems.enabled = true; // disable for intro
 		menuItems.createItem('story mode', function() startExitState(new StoryMenuState()));
 		menuItems.createItem('freeplay', function() startExitState(new FreeplayState()));
-		// addMenuItem('options', function () startExitState(new OptionMenu()));
-		#if CAN_OPEN_LINKS
-		var hasPopupBlocker = #if web true #else false #end;
-
-		if (VideoState.seenVideo)
-			menuItems.createItem('kickstarter', selectDonate, hasPopupBlocker);
-		else
-			menuItems.createItem('donate', selectDonate, hasPopupBlocker);
-		#end
-		menuItems.createItem('options', function() startExitState(new OptionsState()));
+		menuItems.createItem('options', function() startExitState(new nullEngine.menus.options.MasterOptionsState()));
 
 		// center vertically
 		var spacing = 160;
@@ -139,36 +130,6 @@ class MainMenuState extends MusicBeatState
 	function onMenuItemChange(selected:MenuItem)
 	{
 		camFollow.setPosition(selected.getGraphicMidpoint().x, selected.getGraphicMidpoint().y);
-	}
-
-	#if CAN_OPEN_LINKS
-	function selectDonate()
-	{
-		#if linux
-		// Sys.command('/usr/bin/xdg-open', ["https://ninja-muffin24.itch.io/funkin", "&"]);
-		Sys.command('/usr/bin/xdg-open', [
-			"https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game/",
-			"&"
-		]);
-		#else
-		// FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
-
-		FlxG.openURL('https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game/');
-		#end
-	}
-	#end
-
-	public function openPrompt(prompt:Prompt, onClose:Void->Void)
-	{
-		menuItems.enabled = false;
-		prompt.closeCallback = function()
-		{
-			menuItems.enabled = true;
-			if (onClose != null)
-				onClose();
-		}
-
-		openSubState(prompt);
 	}
 
 	function startExitState(state:FlxState)
