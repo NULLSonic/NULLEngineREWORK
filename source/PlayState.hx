@@ -1,5 +1,6 @@
 package;
 
+import nullEngine.backends.EngineThemes;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -789,11 +790,6 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		scoreTxt.scrollFactor.set();
-		add(scoreTxt);
-
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -801,6 +797,8 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		addScoreTxt();
 
 		grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -870,6 +868,22 @@ class PlayState extends MusicBeatState
 		} 
 
 		super.create();
+	}
+
+	function addScoreTxt()
+	{
+		scoreTxt = new FlxText(0, FlxG.save.data.scoreTxtY, FlxG.width, "", FlxG.save.data.scoreTxtSize);
+		#if debug
+			trace(FlxG.save.data.scoreTxtY);
+		#end
+
+		EngineThemes.setColor(FlxG.save.data.scoreTxtColor);
+		scoreTxt.setFormat(Paths.font(FlxG.save.data.scoreTxtFont), FlxG.save.data.scoreTxtSize, FlxColor.fromString(EngineThemes.colorTheme), FlxG.save.data.scoreTxtAlign);
+		
+		EngineThemes.setColor(FlxG.save.data.scoreTxtBorderColor);
+		scoreTxt.setBorderStyle(FlxG.save.data.scoreTxtBorderStyle, FlxColor.fromString(EngineThemes.colorTheme), FlxG.save.data.scoreTxtBorderSize, FlxG.save.data.scoreTxtBorderQuality);
+
+		add(scoreTxt);
 	}
 
 	function initDiscord():Void
@@ -1449,7 +1463,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
+		updateScoreTxt();
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
@@ -1778,6 +1792,16 @@ class PlayState extends MusicBeatState
 
 		if (!inCutscene)
 			keyShit();
+	}
+
+	var txt:String = "";
+	function updateScoreTxt()
+	{
+		txt = ""; //Always clears the txt so no weird stuf happens.
+
+		txt += FlxG.save.data.scoreTextStart + songScore + FlxG.save.data.scoreTextEnd;
+
+		scoreTxt.text = txt;
 	}
 
 	function killCombo():Void

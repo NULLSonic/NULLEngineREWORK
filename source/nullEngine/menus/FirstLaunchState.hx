@@ -1,5 +1,7 @@
 package nullEngine.menus;
 
+import nullEngine.backends.EngineThemes;
+import nullEngine.backends.EngineSaveData;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -17,16 +19,17 @@ class FirstLaunchState extends MusicBeatState
 
     override function create()
     {
+        EngineSaveData.setupSaveData();
+        EngineThemes.setColor(FlxG.save.data.engineTheme);
 
         bg = new FlxSprite().loadGraphic(Paths.image("menus/nullEngine/menuDesat"));
 
         bg.setGraphicSize(Std.int(bg.width * 1.1));
         bg.updateHitbox();
         bg.screenCenter();
-        bg.color = 0xff3c1f83;
+        bg.color = FlxColor.fromString(EngineThemes.colorTheme);
 
         add(bg);
-
         logo = new FlxSprite().loadGraphic(Paths.image("menus/nengine"));
 
         logo.setGraphicSize(Std.int(logo.width * 0.5));
@@ -72,6 +75,8 @@ class FirstLaunchState extends MusicBeatState
 
         add(txt);
 
+        FlxG.sound.playMusic(Paths.music('breakfast'), 0.7);
+
         super.create();    
     }
 
@@ -81,6 +86,7 @@ class FirstLaunchState extends MusicBeatState
         {
             if (FlxG.keys.justPressed.ENTER) {
                 FlxG.camera.flash(FlxColor.WHITE, 1);
+                FlxG.sound.destroy(true);
                 FlxG.sound.play(Paths.sound("confirmMenu"));
                 FlxG.save.data.firstLaunch = false;
                 nextState = "Setup";
