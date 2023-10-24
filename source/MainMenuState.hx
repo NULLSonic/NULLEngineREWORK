@@ -35,6 +35,8 @@ class MainMenuState extends MusicBeatState
 {
 	var menuItems:MainMenuList;
 
+	var logo:FlxSprite;
+
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
@@ -89,7 +91,7 @@ class MainMenuState extends MusicBeatState
 			FlxFlicker.flicker(magenta, 1.1, 0.15, false, true);
 		});
 
-		menuItems.enabled = true; // disable for intro
+		menuItems.enabled = false; // disable for intro
 		menuItems.createItem('story mode', function() startExitState(new StoryMenuState()));
 		menuItems.createItem('freeplay', function() startExitState(new FreeplayState()));
 		menuItems.createItem('options', function() startExitState(new nullEngine.menus.options.MasterOptionsState()));
@@ -104,16 +106,36 @@ class MainMenuState extends MusicBeatState
 			menuItem.y = top + spacing * i;
 		}
 
+		logo = new FlxSprite(275, -100).loadGraphic(Paths.image("menus/nengine"));
+		logo.antialiasing = true;
+		logo.scale.x = 1.5;
+		logo.scale.y = 1.5;
+		logo.updateHitbox();
+		logo.screenCenter();
+		logo.y -= 50;
+		logo.scrollFactor.set(0, 0);
+
+		add(logo);
+
+		FlxTween.tween(logo, { x: FlxG.width * 0.6, y: FlxG.height * 0.5}, 1, {
+			ease: FlxEase.elasticInOut,
+			type: ONESHOT
+		});
+
+		FlxTween.tween(logo.scale, { x: 0.5, y: 0.5}, 1, {
+			ease: FlxEase.circInOut,
+			type: ONESHOT,
+			onComplete: doLogoBop
+		});
+
 		FlxG.cameras.reset(new SwagCamera());
 		FlxG.camera.follow(camFollow, null, 0.06);
 		// FlxG.camera.setScrollBounds(bg.x, bg.x + bg.width, bg.y, bg.y + bg.height * 1.2);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 36, 0, "Funkin' Ver: " + Application.current.meta.get('version') + "\nNULL Engine Ver: " + Main.engineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-
-		versionShit.text += '(Newgrounds exclusive preview)';
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -170,6 +192,29 @@ class MainMenuState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+	}
+
+	var logoBop = false;
+
+	function doLogoBop(tween:FlxTween):Void
+	{
+		logoBop = true;
+	}
+
+	override function beatHit()
+	{
+		if (logoBop)
+		{
+			logo.scale.x = 0.55;
+			logo.scale.y = 0.55;
+
+			FlxTween.tween(logo.scale, { x: 0.5, y: 0.5}, 0.25, {
+				ease: FlxEase.linear,
+				type: ONESHOT
+			});
+		}
+
+		super.beatHit();
 	}
 }
 
