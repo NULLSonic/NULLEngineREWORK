@@ -26,11 +26,13 @@ class HUDEditorState extends MusicBeatState
     var hpColor2Txt:FlxInputText;
     var scoreTxtAnimationTxt:FlxInputText;
 
+    var save = FlxG.save.data;
+
     override function create()
     {
         FlxG.mouse.visible = true;
 
-        EngineThemes.setColor(FlxG.save.data.engineTheme);
+        EngineThemes.setColor(save.engineTheme);
 
         bg = new FlxSprite().loadGraphic(Paths.image("menus/nullEngine/menuDesat"));
 
@@ -61,13 +63,13 @@ class HUDEditorState extends MusicBeatState
 
     function addScoreTxt()
     {
-        scoreTxt = new FlxText(FlxG.save.data.scoreTxtX, FlxG.save.data.scoreTxtY, FlxG.width, "", FlxG.save.data.scoreTxtSize);
+        scoreTxt = new FlxText(save.scoreTxtX, save.scoreTxtY, FlxG.width, "", save.scoreTxtSize);
     
-        EngineThemes.setColor(FlxG.save.data.scoreTxtColor);
-        scoreTxt.setFormat(Paths.font(FlxG.save.data.scoreTxtFont), FlxG.save.data.scoreTxtSize, FlxColor.fromString(EngineThemes.colorTheme), FlxG.save.data.scoreTxtAlign);
+        EngineThemes.setColor(save.scoreTxtColor);
+        scoreTxt.setFormat(Paths.font(save.scoreTxtFont), save.scoreTxtSize, FlxColor.fromString(EngineThemes.colorTheme), save.scoreTxtAlign);
             
-        EngineThemes.setColor(FlxG.save.data.scoreTxtBorderColor);
-        scoreTxt.setBorderStyle(FlxG.save.data.scoreTxtBorderStyle, FlxColor.fromString(EngineThemes.colorTheme), FlxG.save.data.scoreTxtBorderSize, FlxG.save.data.scoreTxtBorderQuality);
+        EngineThemes.setColor(save.scoreTxtBorderColor);
+        scoreTxt.setBorderStyle(save.scoreTxtBorderStyle, FlxColor.fromString(EngineThemes.colorTheme), save.scoreTxtBorderSize, save.scoreTxtBorderQuality);
     
         add(scoreTxt);
     }
@@ -75,72 +77,72 @@ class HUDEditorState extends MusicBeatState
     function addOptionsUI()
     {
         var hudShown = new FlxUICheckBox(5, 25, null, null, "Show Hud?", 75);
-        hudShown.checked = FlxG.save.data.hudShown;
+        hudShown.checked = save.hudShown;
         hudShown.callback = function()
         {
             if (hudShown.checked)
-                FlxG.save.data.hudShown = true;
+                save.hudShown = true;
             else
-                FlxG.save.data.hudShown = false;
+                save.hudShown = false;
         }
 
         var hpBarShown = new FlxUICheckBox(5, 50, null, null, "Show HP Bar?", 75);
-        hpBarShown.checked = FlxG.save.data.hpBarShown;
+        hpBarShown.checked = save.hpBarShown;
         hpBarShown.callback = function()
         {
             if (hpBarShown.checked)
-                FlxG.save.data.hpBarShown = true;
+                save.hpBarShown = true;
             else
-                FlxG.save.data.hpBarShown = false;
+                save.hpBarShown = false;
         }
 
         var colorHpBar = new FlxUICheckBox(105, 50, null, null, "Colored Hp Bar?", 75);
-        colorHpBar.checked = FlxG.save.data.coloredHPBar;
+        colorHpBar.checked = save.coloredHPBar;
         colorHpBar.callback = function()
         {
             if (colorHpBar.checked)
-                FlxG.save.data.coloredHPBar = true;
+                save.coloredHPBar = true;
             else
-                FlxG.save.data.coloredHPBar = false;
+                save.coloredHPBar = false;
         }
 
-        var hpColor1 = new FlxUIInputText(5, 75, 70, FlxG.save.data.p1Color, 8);
+        var hpColor1 = new FlxUIInputText(5, 75, 70, save.p1Color, 8);
         hpColor1Txt = hpColor1;
 
-        var hpColor2 = new FlxUIInputText(105, 75, 70, FlxG.save.data.p2Color, 8);
+        var hpColor2 = new FlxUIInputText(105, 75, 70, save.p2Color, 8);
         hpColor2Txt = hpColor2;
 
         var colorSave = new FlxButton(5, 100, "Save Colors", updateHPColors);
         var colorReset = new FlxButton(105, 100, "Reset Colors", resetHPColors);
 
         var comboShown = new FlxUICheckBox(5, 125, null, null, "Show Combo?", 75);
-        comboShown.checked = FlxG.save.data.comboShown;
+        comboShown.checked = save.comboShown;
         comboShown.callback = function()
         {
             if (comboShown.checked)
-                FlxG.save.data.comboShown = true;
+                save.comboShown = true;
             else
-                FlxG.save.data.comboShown = false;
+                save.comboShown = false;
         }
 
         var comboTxtShown = new FlxUICheckBox(105, 125, null, null, "Show Combo Sprite?", 75);
-        comboTxtShown.checked = FlxG.save.data.comboTxtShown;
+        comboTxtShown.checked = save.comboTxtShown;
         comboTxtShown.callback = function()
         {
             if (comboTxtShown.checked)
-                FlxG.save.data.comboTxtShown = true;
+                save.comboTxtShown = true;
             else
-                FlxG.save.data.comboTxtShown = false;
+                save.comboTxtShown = false;
         }
 
         var ratingsShown = new FlxUICheckBox(5, 150, null, null, "Show Ratings?", 75);
-        ratingsShown.checked = FlxG.save.data.ratingsShown;
+        ratingsShown.checked = save.ratingsShown;
         ratingsShown.callback = function()
         {
             if (ratingsShown.checked)
-                FlxG.save.data.ratingsShown = true;
+                save.ratingsShown = true;
             else
-                FlxG.save.data.ratingsShown = false;
+                save.ratingsShown = false;
         }
 
         var tabGroupOptions = new FlxUI(null, uiBox);
@@ -163,16 +165,16 @@ class HUDEditorState extends MusicBeatState
     function addScoreTxtUI()
     {
         var scoreTxtShown = new FlxUICheckBox(5, 25, null, null, "Show Score Text?", 75);
-        scoreTxtShown.checked = FlxG.save.data.scoreTxtShown;
+        scoreTxtShown.checked = save.scoreTxtShown;
         scoreTxtShown.callback = function()
         {
             if (scoreTxtShown.checked)
-                FlxG.save.data.scoreTxtShown = true;
+                save.scoreTxtShown = true;
             else
-                FlxG.save.data.scoreTxtShown = false;
+                save.scoreTxtShown = false;
         }
 
-        var scoreTxtAnimation = new FlxUIInputText(105, 25, 70, FlxG.save.data.scoreTxtAnimation, 8);
+        var scoreTxtAnimation = new FlxUIInputText(105, 25, 70, save.scoreTxtAnimation, 8);
         scoreTxtAnimationTxt = scoreTxtAnimation;
 
         var scoreTxtPlayAnim = new FlxButton(5, 50, "Play Animation", playScoreTxtAnim);
@@ -225,30 +227,30 @@ class HUDEditorState extends MusicBeatState
 
     function updateHPColors():Void
     {
-        FlxG.save.data.p1Color = hpColor1Txt.text;
-        FlxG.save.data.p2Color = hpColor2Txt.text;
+        save.p1Color = hpColor1Txt.text;
+        save.p2Color = hpColor2Txt.text;
 
-        trace("P1 Color: " + FlxG.save.data.p1Color);
-        trace("P2 Color: " + FlxG.save.data.p2Color);
+        trace("P1 Color: " + save.p1Color);
+        trace("P2 Color: " + save.p2Color);
     }
 
     function resetHPColors():Void
     {
-        FlxG.save.data.p1Color = "0xFF66FF33";
-        FlxG.save.data.p2Color = "0xFFFF0000";
+        save.p1Color = "0xFF66FF33";
+        save.p2Color = "0xFFFF0000";
 
-        hpColor1Txt.text = FlxG.save.data.p1Color;
-        hpColor2Txt.text = FlxG.save.data.p2Color;
+        hpColor1Txt.text = save.p1Color;
+        hpColor2Txt.text = save.p2Color;
 
         trace("Reset Health Bar Color!");
-        trace("P1 Color: " + FlxG.save.data.p1Color);
-        trace("P2 Color: " + FlxG.save.data.p2Color);
+        trace("P1 Color: " + save.p1Color);
+        trace("P2 Color: " + save.p2Color);
     }
 
     var txt:String = "";
     function updateScoreTxt()
     {
-        if (!FlxG.save.data.scoreTxtShown)
+        if (!save.scoreTxtShown)
             scoreTxt.visible = false;
         else
             scoreTxt.visible = true;
@@ -261,9 +263,16 @@ class HUDEditorState extends MusicBeatState
 
     function playScoreTxtAnim():Void
     {
-        if (scoreTxtAnimationTxt.text == "STRETCH_X" || FlxG.save.data.scoreTxtAnimation == "STRETCH_X") {
-            scoreTxt.scale.x = 1.1;
+        if (scoreTxtAnimationTxt.text == "STRETCH_X" || save.scoreTxtAnimation == "STRETCH_X") {
+            scoreTxt.scale.x = save.scoreTxtStretchX;
             FlxTween.tween(scoreTxt.scale, { x: 1 }, 0.25, {
+                ease: FlxEase.linear,
+                type: ONESHOT
+            });
+        }
+        if (scoreTxtAnimationTxt.text == "STRETCH_Y" || save.scoreTxtAnimation == "STRETCH_Y") {
+            scoreTxt.scale.y = save.scoreTxtStretchY;
+            FlxTween.tween(scoreTxt.scale, { y: 1 }, 0.25, {
                 ease: FlxEase.linear,
                 type: ONESHOT
             });

@@ -44,6 +44,9 @@ class EngineSaveData
         save.scoreTxtShown = true;
         save.scoreTxtAnimation = "NONE";
 
+        save.scoreTxtStretchX = 1.1;
+        save.scoreTxtStretchy = 1.1;
+
         save.score = true;
         save.scoreTextStart = "Score: ";
         save.scoreTextEnd = "";
