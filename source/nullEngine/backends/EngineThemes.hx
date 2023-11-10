@@ -2,6 +2,10 @@ package nullEngine.backends;
 
 import flixel.util.FlxColor;
 
+using StringTools;
+/**
+ * The File to set the Engine Color Theme.
+ */
 class EngineThemes
 {
     static public var colorTheme = "0xFFFFFFFF";

@@ -20,7 +20,10 @@ class EngineSaveData
 
         //Hud Customize
         save.hudShown = true;
+        save.hpBarShown = true;
         save.coloredHPBar = false;
+        save.p1Color = "0xFF66FF33";
+        save.p2Color = "0xFFFF0000";
         save.comboShown = true;
         save.comboTxtShown = true;
 
@@ -80,5 +83,10 @@ class EngineSaveData
         save.camZoom = true;
         save.fpsCounter = true;
         save.flippedOverlay = false;
-    }     
+
+        //Easter Eggs
+        save.unlockedSonic = false;
+
+        FlxG.save.flush();
+    }
 }

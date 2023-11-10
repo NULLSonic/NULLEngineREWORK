@@ -34,8 +34,10 @@ import ui.NgPrompt;
 class MainMenuState extends MusicBeatState
 {
 	var menuItems:MainMenuList;
-
 	var logo:FlxSprite;
+	var sonic:FlxSprite;
+
+	var sonicTex:FlxAtlasFrames;
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -127,6 +129,22 @@ class MainMenuState extends MusicBeatState
 			type: ONESHOT,
 			onComplete: doLogoBop
 		});
+
+		sonicTex = Paths.getSparrowAtlas('menus/nullEngine/easterEggs/sonic');
+
+		sonic = new FlxSprite(FlxG.width * 0.04, FlxG.height * 0.86);
+		sonic.scale.x = 4;
+		sonic.scale.y = 4;
+
+		sonic.frames = sonicTex;
+		sonic.animation.addByPrefix("idle", "Idle", 2, true);
+		sonic.animation.play("idle");
+
+		sonic.antialiasing = false;
+		sonic.scrollFactor.set(0, 0); 
+
+		if (FlxG.save.data.unlockedSonic)
+			add(sonic);
 
 		FlxG.cameras.reset(new SwagCamera());
 		FlxG.camera.follow(camFollow, null, 0.06);

@@ -257,6 +257,23 @@ class Character extends FlxSprite
 
 				loadMappedAnims();
 
+			case 'sonic':
+				var tex = Paths.getSparrowAtlas('characters/sonicPlayer');
+				frames = tex;
+
+				animation.addByPrefix('idle', 'Idle', 2);
+				animation.addByPrefix('singDOWN', 'Down', 12);
+				animation.addByPrefix('singLEFT', 'Left', 12);
+				animation.addByPrefix('singRIGHT', 'Right', 12);
+				animation.addByPrefix('singUP', 'Up', 12);
+
+				antialiasing = false;
+				setGraphicSize(Std.int(width * 6));
+ 
+				playAnim('idle');
+
+				flipX = true;
+			
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND');
 				frames = tex;

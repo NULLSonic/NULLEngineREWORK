@@ -786,7 +786,8 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		if (!FlxG.save.data.coloredHPBar)
+			healthBar.createFilledBar(FlxColor.fromString(FlxG.save.data.p2Color), FlxColor.fromString(FlxG.save.data.p1Color));
 		// healthBar
 		add(healthBar);
 
@@ -797,6 +798,13 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		if (!FlxG.save.data.hpBarShown) {
+			healthBarBG.visible = false;
+			healthBar.visible = false;
+			iconP1.visible = false;
+			iconP2.visible = false;
+		}
 
 		addScoreTxt();
 
@@ -872,7 +880,7 @@ class PlayState extends MusicBeatState
 
 	function addScoreTxt()
 	{
-		scoreTxt = new FlxText(0, FlxG.save.data.scoreTxtY, FlxG.width, "", FlxG.save.data.scoreTxtSize);
+		scoreTxt = new FlxText(FlxG.save.data.scoreTxtX, FlxG.save.data.scoreTxtY, FlxG.width, "", FlxG.save.data.scoreTxtSize);
 		#if debug
 			trace(FlxG.save.data.scoreTxtY);
 		#end
@@ -1848,6 +1856,9 @@ class PlayState extends MusicBeatState
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 		}
 
+		if (SONG.player1 == "sonic")
+			FlxG.save.data.unlockedSonic = true;
+
 		if (isStoryMode)
 		{
 			campaignScore += songScore;
@@ -2026,6 +2037,10 @@ class PlayState extends MusicBeatState
 		});
 		if (combo >= 10 || combo == 0)
 			displayCombo();
+
+		if (!FlxG.save.data.ratingsShown) {
+			rating.visible = false;
+		}
 	}
 
 	function displayCombo():Void
@@ -2120,6 +2135,14 @@ class PlayState extends MusicBeatState
 			});
 
 			daLoop++;
+
+			if (!FlxG.save.data.comboShown) {
+				numScore.visible = false;
+			}
+		}
+
+		if (!FlxG.save.data.comboTxtShown) {
+			comboSpr.visible = false;
 		}
 	}
 

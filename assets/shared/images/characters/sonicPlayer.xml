@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicPlayer.png">
+	<!-- Created with Adobe Animate version 23.0.3.115 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Down0000" x="0" y="0" width="24" height="32" frameX="-4" frameY="0" frameWidth="29" frameHeight="32"/>
+	<SubTexture name="Down0001" x="29" y="0" width="29" height="26" frameX="0" frameY="-6" frameWidth="29" frameHeight="32"/>
+	<SubTexture name="Idle0000" x="63" y="0" width="30" height="38"/>
+	<SubTexture name="Idle0001" x="98" y="0" width="29" height="38" frameX="-1" frameY="0" frameWidth="30" frameHeight="38"/>
+	<SubTexture name="Left0000" x="132" y="0" width="30" height="35" frameX="-1" frameY="-1" frameWidth="31" frameHeight="36"/>
+	<SubTexture name="Left0001" x="167" y="0" width="31" height="36"/>
+	<SubTexture name="Right0000" x="203" y="0" width="38" height="40"/>
+	<SubTexture name="Right0001" x="246" y="0" width="33" height="39" frameX="-4" frameY="-1" frameWidth="38" frameHeight="40"/>
+	<SubTexture name="Up0000" x="284" y="0" width="28" height="38"/>
+	<SubTexture name="Up0001" x="317" y="0" width="28" height="38"/>
+</TextureAtlas>

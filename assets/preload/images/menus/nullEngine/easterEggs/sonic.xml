@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonic.png">
+	<!-- Created with Adobe Animate version 23.0.3.115 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Idle0000" x="0" y="0" width="30" height="38"/>
+	<SubTexture name="Idle0001" x="35" y="0" width="29" height="38" frameX="0" frameY="0" frameWidth="30" frameHeight="38"/>
+</TextureAtlas>

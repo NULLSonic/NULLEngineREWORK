@@ -20,14 +20,6 @@ class MasterOptionsState extends MusicBeatState
         'Gameplay',
         'Extras'
     ];
-
-    var optionsExplain:Array<String> = [
-        "Change your keybinds to your liking!",
-        "",
-        "",
-        "",
-        "Bonus and Easter Egg Content."
-    ];
     var curSelected = 0;
     
     override function create()
@@ -86,8 +78,12 @@ class MasterOptionsState extends MusicBeatState
     
         if (accepted)
         {
-
+            if (curSelected == 2)
+                FlxG.switchState(new HUDEditorState(transIn));
         }
+
+        if (controls.BACK)
+            FlxG.switchState(new MainMenuState(transIn));
             
     }
 
