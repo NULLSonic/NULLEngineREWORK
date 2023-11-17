@@ -1,4 +1,6 @@
 export/
 .vscode/
 APIStuff.hx
+
+# MacOS
 .DS_STORE

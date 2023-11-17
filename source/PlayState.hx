@@ -1957,6 +1957,8 @@ class PlayState extends MusicBeatState
 
 		var isSick:Bool = true;
 
+		playScoreTxtAnim(daRating);
+
 		if (noteDiff > Conductor.safeZoneOffset * 0.9)
 		{
 			daRating = 'shit';
@@ -2397,6 +2399,32 @@ class PlayState extends MusicBeatState
 				note.destroy();
 			}
 		}
+	}
+	function playScoreTxtAnim(rating:String)
+	{
+		if (FlxG.save.data.scoreTxtAnimation == "STRETCH_X") {
+            scoreTxt.scale.x = FlxG.save.data.scoreTxtStretchX;
+            FlxTween.tween(scoreTxt.scale, { x: 1 }, 0.1, {
+                ease: FlxEase.linear,
+                type: ONESHOT
+            });
+        }
+        if (FlxG.save.data.scoreTxtAnimation == "STRETCH_Y") {
+            scoreTxt.scale.y = FlxG.save.data.scoreTxtStretchy;
+            FlxTween.tween(scoreTxt.scale, { y: 1 }, 0.1, {
+                ease: FlxEase.linear,
+                type: ONESHOT
+            });
+        }
+        if (FlxG.save.data.scoreTxtAnimation == "STRETCH") {
+            scoreTxt.scale.x = FlxG.save.data.scoreTxtStretchX;
+            scoreTxt.scale.y = FlxG.save.data.scoreTxtStretchy;
+
+            FlxTween.tween(scoreTxt.scale, { x: 1, y: 1 }, 0.1, {
+                ease: FlxEase.linear,
+                type: ONESHOT
+            });
+        }
 	}
 
 	var fastCarCanDrive:Bool = true;

@@ -178,6 +178,7 @@ class HUDEditorState extends MusicBeatState
         scoreTxtAnimationTxt = scoreTxtAnimation;
 
         var scoreTxtPlayAnim = new FlxButton(5, 50, "Play Animation", playScoreTxtAnim);
+        var scoreTxtSaveAnim = new FlxButton(105, 50, "Save Animation", saveScoreTxtAnim);
 
         var tabGroupScoreTxt = new FlxUI(null, uiBox);
 		tabGroupScoreTxt.name = "ScoreTxt";
@@ -185,6 +186,7 @@ class HUDEditorState extends MusicBeatState
         tabGroupScoreTxt.add(scoreTxtShown);
         tabGroupScoreTxt.add(scoreTxtAnimation);
         tabGroupScoreTxt.add(scoreTxtPlayAnim);
+        tabGroupScoreTxt.add(scoreTxtSaveAnim);
 
         uiBox.addGroup(tabGroupScoreTxt);
     }
@@ -203,8 +205,8 @@ class HUDEditorState extends MusicBeatState
                 });
             } else {
                 uiBoxHidden = true;
-                FlxTween.tween(uiBox, { x: 0 - uiBox.width - 10}, 1, {
-                    ease: FlxEase.elasticIn,
+                FlxTween.tween(uiBox, { x: 0 - uiBox.width - 25}, 1, {
+                    ease: FlxEase.elasticOut,
                     type: ONESHOT
                 });
             }
@@ -263,19 +265,34 @@ class HUDEditorState extends MusicBeatState
 
     function playScoreTxtAnim():Void
     {
-        if (scoreTxtAnimationTxt.text == "STRETCH_X" || save.scoreTxtAnimation == "STRETCH_X") {
+        if (scoreTxtAnimationTxt.text == "STRETCH_X") {
             scoreTxt.scale.x = save.scoreTxtStretchX;
             FlxTween.tween(scoreTxt.scale, { x: 1 }, 0.25, {
                 ease: FlxEase.linear,
                 type: ONESHOT
             });
         }
-        if (scoreTxtAnimationTxt.text == "STRETCH_Y" || save.scoreTxtAnimation == "STRETCH_Y") {
-            scoreTxt.scale.y = save.scoreTxtStretchY;
+        if (scoreTxtAnimationTxt.text == "STRETCH_Y") {
+            scoreTxt.scale.y = save.scoreTxtStretchy;
             FlxTween.tween(scoreTxt.scale, { y: 1 }, 0.25, {
                 ease: FlxEase.linear,
                 type: ONESHOT
             });
         }
+        if (scoreTxtAnimationTxt.text == "STRETCH") {
+            scoreTxt.scale.x = FlxG.save.data.scoreTxtStretchX;
+            scoreTxt.scale.y = FlxG.save.data.scoreTxtStretchy;
+
+            FlxTween.tween(scoreTxt.scale, { x: 1, y: 1 }, 0.25, {
+                ease: FlxEase.linear,
+                type: ONESHOT
+            });
+        }
+    }
+
+    function saveScoreTxtAnim():Void
+    {
+        save.scoreTxtAnimation = scoreTxtAnimationTxt.text;
+        trace("Saved Animation: " + save.scoreTxtAnimation);
     }
 }
