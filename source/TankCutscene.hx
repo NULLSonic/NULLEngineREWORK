@@ -1,7 +1,11 @@
 package;
 
 import flixel.FlxSprite;
-import flixel.system.FlxSound;
+#if (flixel >= "5.3.0")
+	import flixel.sound.FlxSound;
+#else
+	import flixel.system.FlxSound;
+#end
 
 class TankCutscene extends FlxSprite
 {
