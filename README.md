@@ -1,7 +1,1 @@
-# Friday Night Funkin': NULL ENGINE
-
-## === About ===
-
-### What is NULL Engine?
-
-NULL Engine is a Friday Night Funkin' Engine that aims to be fully customizable. 
+# THIS IS THE OLD VERSION MADE ON HAXEFLIXEL!!! DO NOT USE THIS ONE AS THIS ONE SUCKS ASS GO HERE TO GET THE REAL DEAL => https://github.com/NULLSonic/NULLEngine/tree/main
